@@ -1,32 +1,4 @@
-male(sam).
-male(fab).
-male(dan).
-male(lex).
-male(don).
-male(pat).
-
-female(ann).
-female(ute).
-female(kat).
-female(amy).
-female(ema).
-female(eve).
-
-parent(sam,ute).
-parent(sam,fab).
-parent(sam,dan).
-parent(ann,ute).
-parent(ann,fab).
-parent(ann,dan).
-parent(kat,lex).
-parent(kat,pat).
-parent(fab,lex).
-parent(fab,pat).
-parent(dan,eve).
-parent(amy,eve).
-parent(amy,ema).
-parent(tim,ema).
-
+:- consult('stammbaum').
 
 father(X,Y) :- male(X), parent(X,Y).
 mother(X,Y) :- female(X), parent(X,Y).
