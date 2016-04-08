@@ -5,7 +5,7 @@ transportiere(AnzahlScheiben, Von, Lager, Nach) :-
   AnzahlScheiben > 1,
   ObereScheiben is AnzahlScheiben - 1,
   transportiere(ObereScheiben, Von, Nach, Lager),
-  write(AnzahlScheiben), write('        '),
+  write(AnzahlScheiben), nl,
   transportiere(1, Von, Lager, Nach),
   transportiere(ObereScheiben, Lager, Von, Nach).
   
