@@ -14,7 +14,7 @@ np([SemN,SemPP],N) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
 
 np(SemNP,N,_) --> n(SemNP,N,_).
 np(SemNP,N,_) --> det(_,Gen,dat), n(SemNP,N,Gen).
-np([SemN,SemPP],N,_) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
+np([SemN,SemPP],N,_) --> det(_,Gen,dat), n(SemN,N,Gen), pp(SemPP,N).
 
 pp(SemPP,N) --> p(_), np(SemPP,N,_).
 
