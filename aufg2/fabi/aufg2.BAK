@@ -1,9 +1,8 @@
 s(SemS) --> ergF(SemS).
 s(SemS) --> entF(SemS).
-s(SemS) --> aS(SemS).
 
-aS([SemNP,SemVP]) --> np(SemNP,N), vp(SemVP,N).
 ergF([SemVP,SemNP]) --> vp(SemVP,N), np(SemNP,N).
+
 entF([SemI,SemVP]) --> ip(SemI,_), vp(SemVP,_).
 
 np(SemNP,N) --> n(SemNP,N).
