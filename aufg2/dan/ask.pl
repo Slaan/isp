@@ -13,4 +13,4 @@ writer([H|T]) :- write(' '), write(H), writer(T).
 
 answering(F,W,[LL|L],BB) :- s([XX|X],F,[]),flatten([XX|X],XF), ask(W,[LL|L],XF), call(W), s([LL|X],BB,[]).
 
-main() :- read_sentence(QuestionW),reverse(QuestionW,[M|QuestionR]), reverse(QuestionR,Question), answering(Question,_,_,C), writer(C),!.
+main(_) :- read_sentence(QuestionW), reverse(QuestionW,[M|QuestionR]), reverse(QuestionR,Question), answering(Question,_,_,C), writer(C),!.
