@@ -7,10 +7,14 @@ ergF([SemVP,SemNP]) --> vp(SemVP,N), np(SemNP,N).
 entF([SemI,SemVP]) --> ip(SemI,_), vp(SemVP,_).
 
 np(SemNP,N) --> n(SemNP,N,_).
-np(SemNP,N) --> det(_,_,_), n(SemNP,N,_).
-np([SemN,SemPP],N) --> det(_,Gen,Casus), n(SemN,N,Gen), pp(SemPP,N).
+np(SemNP,N) --> det(_,Gen,nom), n(SemNP,N,Gen).
+np([SemN,SemPP],N) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
 
-pp(SemPP,N) --> p(_), np(SemPP,N).
+np(SemNP,N,_) --> n(SemNP,N,_).
+np(SemNP,N,_) --> det(_,Gen,dat), n(SemNP,N,Gen).
+np([SemN,SemPP],N,_) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
+
+pp(SemPP,N) --> p(_), np(SemPP,N,_).
 
 vp(SemVP,N) --> v(SemVP,N).
 vp([SemN,SemNP],N) --> v(SemN,N), np(SemNP,_).
