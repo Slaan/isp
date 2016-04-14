@@ -1,12 +1,12 @@
 :- consult('aufg1').
 
 s(SemS) --> aS(SemS).
-s(SemS) --> ergF(SemS).
+s(SemS) --> ergF(SemS), {write(SemS)}.
 s(SemS) --> entF(SemS).
 
 aS([SemNP,SemVP]) --> np(SemNP,N), vp(SemVP,N).
-ergF([SemVP,SemNP]) --> vp(SemVP,N), np(SemNP,N).
-entF([SemI,SemVP]) --> ip(SemI,_), vp(SemVP,_).
+entF([SemVP,SemNP1,SemNP2]) --> v(SemVP,N), np(SemNP1,N),!, np(SemNP2,N).
+ergF([SemI,SemVP]) --> ip(SemI,_), vp(SemVP,_).
 
 np(SemNP,N) --> n(SemNP,N,_).
 np(SemNP,N) --> det(_,Gen,nom), n(SemNP,N,Gen).
@@ -14,7 +14,7 @@ np([SemN,SemPP],N) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
 
 np(SemNP,N,_) --> n(SemNP,N,_).
 np(SemNP,N,_) --> det(_,Gen,dat), n(SemNP,N,Gen).
-np([SemN,SemPP],N,_) --> det(_,Gen,nom), n(SemN,N,Gen), pp(SemPP,N).
+np([SemN,SemPP],N,_) --> det(_,Gen,dat), n(SemN,N,Gen), pp(SemPP,N).
 
 pp(SemPP,N) --> p(_), np(SemPP,N,_).
 
@@ -39,17 +39,18 @@ lex(der,the,det,_,male,nom).
 lex(die,the,det,_,female,nom).
 lex(der,the,det,_,female,dat).
 lex(dem,the,det,_,male,dat).
+lex(das,the,det,_,neutral,_).
 
 lex(onkel,uncle,bz,sg,male,_).
 lex(tante,aunt,bz,sg,female,_).
 lex(vater,father,bz,sg,male,_).
 lex(mutter,mother,bz,sg,female,_).
+lex(kind,child,bz,sg,neutral,_).
+lex(tochter,daughter,bz,sg,female,_).
+lex(sohn,son,bz,sg,male,_).
 
 lex(von,from,p,_,_,_).
 
-lex(sam,sam,na,sg,male,_).
-lex(eve,eve,na,sg,female,_).
-lex(franz,franz,na,sg,male,_).
-lex(hans,hans,na,sg,male,_).
-lex(maria,maria,na,sg,female,_).
-lex(dan,dan,na,sg,male,_).
+lex(A,A,_,_,male,_) :- male(A).
+lex(A,A,_,_,female,_) :- female(A).
+

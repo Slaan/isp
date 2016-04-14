@@ -3,6 +3,8 @@
 father(X,Y) :- parent(X,Y), male(X).
 mother(X,Y) :- parent(X,Y), female(X).
 child(X,Y) :- parent(Y,X).
+daughter(X,Y) :- child(X,Y), female(X).
+son(X,Y) :- child(X,Y), male(X).
 grandparent(X,Y) :- parent(Z,Y), parent(X,Z).
 grandfather(X,Y) :- not(female(X)), grandparent(X,Y).
 grandmother(X,Y) :- grandparent(X,Y), female(X).
@@ -13,3 +15,5 @@ halfsister(X,Y) :- halfsibling(X,Y), female(X).
 halfbrother(X,Y) :- halfsibling(X,Y), male(X).
 cousin(X,Y) :- parent(A,X), fullsibling(A,B), parent(B,Y).
 nephew(X,Y) :- fullsibling(Y,A), child(X,A).
+uncle(X,Y) :- fullsibling(X,Z), parent(Z,Y), male(X).
+aunt(X,Y) :- fullsibling(X,Z), parent(Z,Y), female(X).
