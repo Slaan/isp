@@ -48,6 +48,10 @@ search([[FirstNode|Predecessors]|RestPaths],Strategy,Solution) :-
   insert_new_paths(Strategy,NewPaths,RestPaths,AllPaths),        % Neue Pfade einsortieren
   search(AllPaths,Strategy,Solution).
 
+search([[FirstNode|Predecessors]|RestPaths],iterDepth,Solution) :- 
+  searchIter() .
+  
+
 generate_new_paths(Children,Path,NewPaths):-
   maplist(get_state,Path,States),
   generate_new_paths_help(Children,Path,States,NewPaths).
