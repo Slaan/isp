@@ -123,7 +123,7 @@ eval_state(State,Value) :-
   
 eval_correct(CorrectState,Value) :-
   findall((Y),eval_x(on(table,X),CorrectState,Y),TableResult),
-  findall((YY),eval_x(on(Z,X),CorrectState,YY),OnResult),
+  findall((YY),eval_x(on(not(Z,X),CorrectState,YY),OnResult),
   findall((YYY),eval_x(clear(X),CorrectState,YYY),ClearResult),
   length(TableResult, TableLength),
   length(OnResult, OnLength),
