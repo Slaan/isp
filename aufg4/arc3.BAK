@@ -8,47 +8,55 @@
 
 %WL [(x,y),...]
 
-arcWhile([],_,_,_).
-arcWhile([(X,Y)|WLR],D,DAll,R2) :- member((X,DX),DAll),
+ac3(D,DAll,R2) :- buildWorkItems(_,_,D,R2,WL,buildWorkItemsHInit),
+                  arcWhile(WL,D,DAll,R2,End).
+
+
+arcWhile([],_,DAll,_,DAll) :- writeln(dasd),
+                              writeln(dasd).
+arcWhile([(R,X,Y)|WLR],D,DAll,R2,End) :- member((X,DX),DAll),
                                    member((Y,DY),DAll),
-                                   arcReduce(DX,DY,NDX),
+                                   arcReduce(DX,DY,NDX,R2,R),
                                    delete(DAll,(X,_),DAllT1),
-                                   DAllT2 is [(X,NDX)|DAllT1],
-                                   arcIfReduce(X,NX,Y,D,DAllT2,R2,WT),
+                                   DAllT2 = [(X,NDX)|DAllT1],
+                                   !,arcIfReduce(X,DX,NDX,Y,D,R2,WR),
+                                   append(WR,WLR,WL),
+                                   !,arcWhile(WL,D,DAllT2,R2,End).
 
+arcIfReduce(X,DX,NDX,Y,D,R2,WR) :- length(DX,LDX),
+                                   length(NDX,LNDX),
+                                   LDX  \== LNDX,
+                                   !,arcIfDomain(X,Y,D,R2,WR,NDX).
+arcIfReduce(_,_,_,_,_,_,_).
 
+arcReduce([],_,[],_,_).
+arcReduce([VX|DX],DY,[VX|NDX],R2,R) :-  arcReduce(DX,DY,NDX,R2,R),
+                                        Call =.. [R,VX,DY,_],
+                                        !,call(Call).
+arcReduce([_|DX],DY,NDX,R2,R) :-  arcReduce(DX,DY,NDX,R2,R).
 
-                                   arcWhile(WLR,D,DAllT2,R2T).
+arcIfDomain(_,_,_,_,_,[]) :-
+writeln(fd),!,fail.
+arcIfDomain(X,Y,D,R2,WR,_) :- buildWorkItems(X,Y,D,R2,WR,buildWorkItemsH).
 
+buildWorkItems(X,Y,D,R2,WR,Ver) :- Call =.. [Ver,X,Y,D,R2,Z,R],
+                                   findall((R,X,Z),Call,Re),
+                                   buildWorkItemsAdd(Re,WR).
 
-arcIfReduce(X,NX,Y,D,DAll,R2) :- length(DX,LDX),
-                                 length(NDX,LNDX),
-                                 LDX  \== LNDX,
-                                 arcIfDomain(X,NX,Y,D,DAll,R2).
-arcIfReduce(X,NX,Y,D,DAll,R2).
-                    
-arcReduce([],_,[]).
-arcReduce([VX|DX],DY,[VX|NDX]) :-  arcReduce(DX,DY,NDX),
-                                   member(VY,DY),
-                                   satisfyConst(VX,VY),!.
-                                   
-arcReduce([VX|DX],DY,NDX) :-  arcReduce(DX,DY,NDX).
+buildWorkItemsHInit(X,_,D,R2,Z,R) :- member(R,R2),
+                                   member(Z,D),
+                                   member(X,D),
+                                   X \== Z,
+                                   Call =.. [R,X,Z],
+                                   call(Call).
 
+buildWorkItemsH(X,Y,D,R2,Z,R) :- member(R,R2),
+                               member(Z,D),
+                               Y \== Z,
+                               X \== Z,
+                               Call =.. [R,X,Z],
+                               call(Call).
 
-                  %für alle
-satisfyConst(VX,VY) :- gleich(VX,VY).
-
-arcIfDomain(_,[],_,_,_,_) :- fail.
-%arcIfDomain(X,NX,Y,D,DAll,R2) :- findall(
-%                                 .
-
-buildNewWorkItems(X,NX,Y,D,DAll,R2) :- member(R,R2),
-                                       member(Z,D),
-                                       Y \== Z,
-                                       member((Z,DZ),DAll),
-                                       member(VX,NX),
-                                       member(VZ,DZ),
-                                       call(R(VX,VZ)).  %call ändern
-
-gleich(h,1).
-gleich(x,2).
+                               
+buildWorkItemsAdd([],[]).
+buildWorkItemsAdd([(R,X,Y)|WI],[(R,X,Y)|[(R,Y,X)|WR]]) :- buildWorkItemsAdd(WI,WR).
