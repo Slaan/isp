@@ -48,6 +48,10 @@ search([[FirstNode|Predecessors]|RestPaths],Strategy,Solution) :-
   insert_new_paths(Strategy,NewPaths,RestPaths,AllPaths),        % Neue Pfade einsortieren
   search(AllPaths,Strategy,Solution).
 
+search([[FirstNode|Predecessors]|RestPaths],iterDepth,Solution) :- 
+  searchIter() .
+  
+
 generate_new_paths(Children,Path,NewPaths):-
   maplist(get_state,Path,States),
   generate_new_paths_help(Children,Path,States,NewPaths).
@@ -167,7 +171,13 @@ insert_new_paths(oBerg,NewPaths,[],[[First|[Pre|Path]]]):-
 insert_new_paths(bBerg,NewPaths,OldPaths,AllPaths):-
   eval_paths(NewPaths,default),
   insert_new_paths_informed(NewPaths,[],Paths),
+<<<<<<< HEAD
+  append(Paths,OldPaths,AllPaths),
+  write_action(AllPaths),
+  write_state(AllPaths).
+=======
   append(Paths,OldPaths,AllPaths)%,
   %write_action(AllPaths),
   %write_state(AllPaths)
   .
+>>>>>>> f0f88e94c07bc0b65cb76c063f4bd915ddbdd9ff
