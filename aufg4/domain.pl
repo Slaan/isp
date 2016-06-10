@@ -27,7 +27,8 @@ notequal(X,Y) :- domainsList(DL),
                  member(Y,ZD).
 
 constraints([gleich,neben,links,notequal]).
-domainsN([brite, schwede, dane, norweger, deutscher]).
+
+domainsN([norweger, schwede, dane, brite, deutscher]).
 domainsC([rot, gruen, weiss, blau, gelb]).
 domainsP([hund, katze, vogel, pferd, fisch]).
 domainsD([tee, wasser, milch, bier, kaffee]).

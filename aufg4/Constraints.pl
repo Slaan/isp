@@ -1,6 +1,7 @@
-notequal(VX,DY,_) :- !,length(DY,1),
+notequal(VX,DY,_) :- length(DY,1),
                      not(member(VX,DY)).
-notequal(VX,DY,_).
+notequal(VX,DY,_) :- length(DY,L),
+                     L > 1.
 
 gleich(VX,DY,_) :- member(VY,DY),
                    VX = VY.

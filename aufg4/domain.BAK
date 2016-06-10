@@ -1,9 +1,9 @@
 % Autor:
 % Datum: 07.06.2016
 
-gleich(norweger,1).
+gleich(norweger,haus1).
 gleich(norweger,blau).
-gleich(3,milch).
+gleich(haus3,milch).
 gleich(brite,rot).
 gleich(schwede,hund).
 gleich(dane,tee).
@@ -27,6 +27,7 @@ notequal(X,Y) :- domainsList(DL),
                  member(Y,ZD).
 
 constraints([gleich,neben,links,notequal]).
+
 domainsN([brite, schwede, dane, norweger, deutscher]).
 domainsC([rot, gruen, weiss, blau, gelb]).
 domainsP([hund, katze, vogel, pferd, fisch]).

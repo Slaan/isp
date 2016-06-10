@@ -32,7 +32,7 @@ arcIfReduce(_,_,_,_,_,_,_).
 arcReduce([],_,[],_,_).
 arcReduce([VX|DX],DY,[VX|NDX],R2,R) :-  arcReduce(DX,DY,NDX,R2,R),
                                         Call =.. [R,VX,DY,_],
-                                        !,call(Call).
+                                        call(Call).
 arcReduce([_|DX],DY,NDX,R2,R) :-  arcReduce(DX,DY,NDX,R2,R).
 
 arcIfDomain(_,_,_,_,_,[]) :-

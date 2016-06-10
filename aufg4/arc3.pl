@@ -59,4 +59,5 @@ buildWorkItemsH(X,Y,D,R2,Z,R) :- member(R,R2),
 
                                
 buildWorkItemsAdd([],[]).
+buildWorkItemsAdd([(links,X,Y)|WI],[(links,X,Y)|[(rechts,Y,X)|WR]]) :- buildWorkItemsAdd(WI,WR).
 buildWorkItemsAdd([(R,X,Y)|WI],[(R,X,Y)|[(R,Y,X)|WR]]) :- buildWorkItemsAdd(WI,WR).
