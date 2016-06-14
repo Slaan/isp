@@ -26,15 +26,23 @@ domainBuild(D,DAll) :- domains(DT),
                        append(DAllT,DAllH,DAll),
                        append(DT,DHT,D).
 
-einstein() :- domainBuild(D,DAll),
+einstein(End) :- domainBuild(D,DAll),
               constraints(R2),
-              ac3(D,DAll,R2).
+              ac3(D,DAll,R2,DAllcleaned,ac3,_),
+              solveWithac3La(D,D,DAllcleaned,R2,End).
 
 
-
-
-
-
+solveWithac3La(_,[],DAll,_,DAll).
+solveWithac3La(_,[CV|_],DAll,_,_) :- member((CV,[]),DAll), fail.
+solveWithac3La(D,[CV|RCV],DAll,R2,End) :- member((CV,[VCV|DCV]),DAll),
+                                          delete(DAll,(CV,_),DAllT1),
+                                          DAllT2 = [(CV,[VCV])|DAllT1],
+                                          ac3(D,DAllT2,R2,DAllT3,ac3La,CV),
+                                          solveWithac3La(D,RCV,DAllT3,R2,End).
+solveWithac3La(D,[CV|RCV],DAll,R2,End) :- member((CV,[VCV|DCV]),DAll),
+                                          delete(DAll,(CV,_),DAllT1),
+                                          DAllT2 = [(CV,DCV)|DAllT1],
+                                          solveWithac3La(D,[CV|RCV],DAllT2,R2,End).
 
 
 

@@ -2,7 +2,6 @@
 % Datum: 07.06.2016
 
 gleich(norweger,haus1).
-gleich(norweger,blau).
 gleich(haus3,milch).
 gleich(brite,rot).
 gleich(schwede,hund).
@@ -15,16 +14,22 @@ gleich(deutscher,rothmanns).
 
 links(gruen,weiss).
 
+neben(norweger,blau).
 neben(malboro,katze).
 neben(pferd,dunhill).
 neben(malboro,wasser).
 
-notequal(X,Y) :- domainsList(DL),
+notequalH(X,Y) :- domainsList(DL),
                  member(D,DL),
                  Call =.. [D,ZD],
                  call(Call),
                  member(X,ZD),
                  member(Y,ZD).
+gleichH(X,Y) :- gleich(Y,X);
+                gleich(X,Y).
+nebenH(X,Y) :- neben(Y,X);
+               neben(X,Y).
+linksH(X,Y) :- links(X,Y).
 
 constraints([gleich,neben,links,notequal]).
 
