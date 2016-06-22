@@ -1,3 +1,6 @@
+:- include('arc3.pl').
+:- include('domain.pl').
+
 notequal(VX,DY,_) :- length(DY,1),
                      not(member(VX,DY)).
 notequal(VX,DY,_) :- length(DY,L),
@@ -29,8 +32,21 @@ domainBuild(D,DAll) :- domains(DT),
 einstein(End) :- domainBuild(D,DAll),
               constraints(R2),
               ac3(D,DAll,R2,DAllcleaned,ac3,_),
-              solveWithac3La(D,D,DAllcleaned,R2,End).
+              solveWithac3La(D,D,DAllcleaned,R2,End),
+              showSolution(End,1).
+              
+showSolution(_,6) :- writeln("Ende").
+showSolution(Input,House) :- currentHouse(Input,House,Current),
+														writeln(Current),
+														House2 is House +1,
+														showSolution(Input,House2).
 
+currentHouse([],_,[]).
+currentHouse([(Descr,HouseNr)|Rest],House,[Descr|Result]) :- 
+	HouseNr = [House], 
+	currentHouse(Rest,House,Result).
+	
+currentHouse([_|Rest],House,Result) :- currentHouse(Rest,House,Result).
 
 solveWithac3La(_,[],DAll,_,DAll).
 solveWithac3La(_,[CV|_],DAll,_,_) :- member((CV,[]),DAll), fail.
